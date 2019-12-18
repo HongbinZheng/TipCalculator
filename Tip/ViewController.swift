@@ -20,16 +20,31 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        tipLabel.center.x -= view.bounds.width  
+        totalLabel.center.x -= view.bounds.width // Place it on the left of the view with the width = the bounds'width of the view.
+        // animate it from the left to the right
+        UIView.animate(withDuration: 0.5, animations:{
+            self.tipLabel.center.x += self.view.bounds.width
+            self.view.layoutIfNeeded()
+            self.totalLabel.center.x += self.view.bounds.width
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+
+        billField.becomeFirstResponder()
         customLabel.isHidden = true
         customField.isHidden = true
         percent.isHidden = true
-        billField.delegate = self
-        customField.delegate = self
+        let fmt = NumberFormatter()
+        fmt.numberStyle = .currency
+        fmt.locale = NSLocale.autoupdatingCurrent
+        tipLabel.text = fmt.string(from: 0)
+        totalLabel.text = fmt.string(from: 0)
     }
     
     @IBAction func onTap(_ sender: Any) {
         view.endEditing(true)
     }
+    
     
     @IBAction func getCustomer(_ sender: Any) {
         let bill = Double(billField.text!) ?? 0
@@ -37,11 +52,13 @@ class ViewController: UIViewController {
         let tip = bill * customer
         let total = bill + tip
         // update total
-        tipLabel.text = String(format:"$%.2f",tip)
-        totalLabel.text = String(format:"$%.2f",total)
+        let fmt = NumberFormatter()
+        fmt.groupingSeparator = ","
+        fmt.numberStyle = .currency
+        tipLabel.text = fmt.string(from: NSNumber(value:tip))
+        totalLabel.text = fmt.string(from:NSNumber(value:total))
     }
     @IBAction func calTip(_ sender: Any) {
-        
         //Get bill amount
         let bill = Double(billField.text!) ?? 0
         // calculate tip
@@ -60,14 +77,12 @@ class ViewController: UIViewController {
         let tip = bill * precentage
         let total = bill + tip
         // update total
-        tipLabel.text = String(format:"$%.2f",tip)
-        totalLabel.text = String(format:"$%.2f",total)
-    }
-}
-
-extension ViewController:UITextFieldDelegate{
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+        let fmt = NumberFormatter()
+        fmt.groupingSeparator = ","
+        fmt.numberStyle = .currency
+        fmt.locale = NSLocale.autoupdatingCurrent
+        
+        tipLabel.text = fmt.string(from: NSNumber(value:tip))
+        totalLabel.text = fmt.string(from:NSNumber(value:total))
     }
 }
