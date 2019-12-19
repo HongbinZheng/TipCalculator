@@ -13,6 +13,7 @@
 		B2C6E68D239F70AB004A0169 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2C6E68B239F70AB004A0169 /* Main.storyboard */; };
 		B2C6E68F239F70AD004A0169 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2C6E68E239F70AD004A0169 /* Assets.xcassets */; };
 		B2C6E692239F70AD004A0169 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2C6E690239F70AD004A0169 /* LaunchScreen.storyboard */; };
+		B2DF663C23AB5D4F00342809 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DF663B23AB5D4F00342809 /* SettingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		B2C6E68E239F70AD004A0169 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B2C6E691239F70AD004A0169 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B2C6E693239F70AD004A0169 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B2DF663B23AB5D4F00342809 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingViewController.swift; path = Tip/SettingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +42,7 @@
 		B2C6E679239F70AB004A0169 = {
 			isa = PBXGroup;
 			children = (
+				B2DF663B23AB5D4F00342809 /* SettingViewController.swift */,
 				B2C6E684239F70AB004A0169 /* Tip */,
 				B2C6E683239F70AB004A0169 /* Products */,
 			);
@@ -141,6 +144,7 @@
 				B2C6E68A239F70AB004A0169 /* ViewController.swift in Sources */,
 				B2C6E686239F70AB004A0169 /* AppDelegate.swift in Sources */,
 				B2C6E688239F70AB004A0169 /* SceneDelegate.swift in Sources */,
+				B2DF663C23AB5D4F00342809 /* SettingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

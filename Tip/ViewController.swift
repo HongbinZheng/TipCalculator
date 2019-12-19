@@ -8,18 +8,17 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController{
+    var tipPer = [0.1,0.3,0.4]
     @IBOutlet weak var billField: UITextField!
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
-    @IBOutlet weak var customLabel: UILabel!
-    @IBOutlet weak var percent: UILabel!
-    @IBOutlet weak var customField: UITextField!
     @IBOutlet weak var selected: UISegmentedControl!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        self.title = "Tip Calculator"
+        billField.delegate = self
         tipLabel.center.x -= view.bounds.width  
         totalLabel.center.x -= view.bounds.width // Place it on the left of the view with the width = the bounds'width of the view.
         // animate it from the left to the right
@@ -29,11 +28,10 @@ class ViewController: UIViewController {
             self.totalLabel.center.x += self.view.bounds.width
             self.view.layoutIfNeeded()
         }, completion: nil)
-
+        selected.setTitle("\(Int(tipPer[0]*100))%", forSegmentAt: 0)
+        selected.setTitle("\(Int(tipPer[1]*100))%", forSegmentAt: 1)
+        selected.setTitle("\(Int(tipPer[2]*100))%", forSegmentAt: 2)
         billField.becomeFirstResponder()
-        customLabel.isHidden = true
-        customField.isHidden = true
-        percent.isHidden = true
         let fmt = NumberFormatter()
         fmt.numberStyle = .currency
         fmt.locale = NSLocale.autoupdatingCurrent
@@ -41,39 +39,37 @@ class ViewController: UIViewController {
         totalLabel.text = fmt.string(from: 0)
     }
     
-    @IBAction func onTap(_ sender: Any) {
-        view.endEditing(true)
+    func onValueChange(type: Array<Double>) {
+        tipPer = type
+        selected.setTitle("\(Int(tipPer[0]*100))%", forSegmentAt: 0)
+        selected.setTitle("\(Int(tipPer[1]*100))%", forSegmentAt: 1)
+        selected.setTitle("\(Int(tipPer[2]*100))%", forSegmentAt: 2)
     }
     
-    
-    @IBAction func getCustomer(_ sender: Any) {
-        let bill = Double(billField.text!) ?? 0
-        let customer = (Double(customField.text!) ?? 0) / 100
-        let tip = bill * customer
-        let total = bill + tip
-        // update total
-        let fmt = NumberFormatter()
-        fmt.groupingSeparator = ","
-        fmt.numberStyle = .currency
-        tipLabel.text = fmt.string(from: NSNumber(value:tip))
-        totalLabel.text = fmt.string(from:NSNumber(value:total))
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SettingViewController" {
+            if let controller = segue.destination as? SettingViewController{
+                print("pass")
+                controller.delegate = self
+                controller.tipPer = self.tipPer
+            }else{
+                print("Did not pass")
+            }
+            
+        }else{
+            print("not identi")
+        }
     }
+    
     @IBAction func calTip(_ sender: Any) {
         //Get bill amount
         let bill = Double(billField.text!) ?? 0
         // calculate tip
-        let tipPer = [0.15,0.2,0.22]
+        
         var precentage = 0.0
-        if selected.selectedSegmentIndex != 3{
-            customField.isHidden = true
-            customLabel.isHidden = true
-            percent.isHidden = true
+
             precentage = tipPer[selected.selectedSegmentIndex]
-        }else{
-            customField.isHidden = false
-            customLabel.isHidden = false
-            percent.isHidden = false
-        }
+        
         let tip = bill * precentage
         let total = bill + tip
         // update total
@@ -86,3 +82,4 @@ class ViewController: UIViewController {
         totalLabel.text = fmt.string(from:NSNumber(value:total))
     }
 }
+
